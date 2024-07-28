@@ -1,6 +1,7 @@
 # Define variables
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -std=c17
+CFLAGS = -Wall -Wextra -pedantic -std=c17 -I/usr/include/ -I/usr/include/x86_64-linux-gnu
+CFLAGS_END = -lsqlcipher -lykpiv
 SRCDIR = src
 BUILDDIR = build
 TARGET = azkaban
@@ -20,15 +21,15 @@ setup:
 	@echo "Setting up directories..."
 	@mkdir -p $(BUILDDIR)
 
-# Comp9ile target: build the executable
+# Compile target: build the executable
 $(TARGET): $(OBJ)
 	@echo "Linking..."
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $(BUILDDIR)/$@ $^ $(CFLAGS_END)
 
 # Compile object files
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	@echo "Comppiling $<..."
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ $(CFLAGS_END)
 
 # Phony targets
 .PHONY: all clean setup

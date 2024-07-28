@@ -11,3 +11,16 @@ Planed features:
 - be in one file so you can back up it easily
 - probably no backup log in method because screw you.
   You should have registered multiple YubiKeys and backed up one of them!
+
+# How to build
+
+0. install requirements
+0. run `make`
+
+## How to include headers in nvim?
+
+0. have clangd installed
+0. install *bear*
+0. run `bear -- make`
+
+on my machine it works. If it doesn't at yours, that's not my problem!

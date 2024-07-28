@@ -2,3 +2,4 @@ build/
 azkaban
 *.azk
 .cache/
+compile_commands.json

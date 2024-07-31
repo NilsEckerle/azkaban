@@ -31,8 +31,8 @@ typedef struct {
 
 sqlite3 *db_open(const char *filename, const char *password);
 void db_close(sqlite3 *db);
-void db_setup(sqlite3 *db);
-void db_setupcreate_table(sqlite3 *db);
+void _db_setup(sqlite3 *db);
+void _db_create_table(sqlite3 *db, const char *sql_statement);
 Entry db_get_all_entry(void);
 EntryDetail db_get_all_entryDetail(Entry entry_detail);
 int db_write_entry(Entry entry);
@@ -40,8 +40,6 @@ int db_write_entryDetail(EntryDetail entry_detail);
 int db_change_entry(int id, Entry new_entry);
 int db_change_entryDetail(int id, EntryDetail new_entry_detail);
 
-static int callback_populate_zErrMsg(void *NotUsed, int argc, char **argv,
-                                     char **azColName);
-void test_the_db(sqlite3 *db);
+void _db_decrypt(sqlite3 *db, const char *password);
 
 #endif

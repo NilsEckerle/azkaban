@@ -2,8 +2,10 @@
 #include <stdio.h>
 
 void *callback(void *not_used, Entry entry) {
-  printf("id = %d\nname = %s\nuser_name = %s\n\n", entry.id, entry.name,
-         entry.user_name);
+  printf("id = %d\n", entry.id);
+  printf("name = %s\n", entry.name);
+  printf("user_name = %s\n", entry.user_name);
+  printf("\n");
 }
 
 int main(int argc, char *argv[]) {

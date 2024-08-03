@@ -1,6 +1,6 @@
 # Define variables
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -std=c17 -I/usr/include/ -I/usr/include/x86_64-linux-gnu
+CFLAGS = -Wall -Wextra -pedantic -std=c17 -D_GNU_SOURCE -g -I/usr/include/ -I/usr/include/x86_64-linux-gnu
 CFLAGS_END = -lsqlcipher -lykpiv
 SRCDIR = src
 BUILDDIR = build

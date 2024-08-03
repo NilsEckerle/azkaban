@@ -6,16 +6,16 @@
       "-Wextra",
       "-pedantic",
       "-std=c17",
-      "-I/usr/include/",
-      "-I/usr/include/x86_64-linux-gnu",
+      "-I/opt/homebrew/Cellar/sqlcipher/4.6.0/include/",
+      "-I/opt/homebrew/Cellar/yubico-piv-tool/2.5.2/include",
       "-c",
       "-o",
       "build/azkaban.o",
       "src/azkaban.c"
     ],
-    "directory": "/home/nils/Documents/projects/azkaban",
-    "file": "/home/nils/Documents/projects/azkaban/src/azkaban.c",
-    "output": "/home/nils/Documents/projects/azkaban/build/azkaban.o"
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/azkaban.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/azkaban.o"
   },
   {
     "arguments": [
@@ -24,15 +24,33 @@
       "-Wextra",
       "-pedantic",
       "-std=c17",
-      "-I/usr/include/",
-      "-I/usr/include/x86_64-linux-gnu",
+      "-I/opt/homebrew/Cellar/sqlcipher/4.6.0/include/",
+      "-I/opt/homebrew/Cellar/yubico-piv-tool/2.5.2/include",
       "-c",
       "-o",
       "build/db_manager.o",
       "src/db_manager.c"
     ],
-    "directory": "/home/nils/Documents/projects/azkaban",
-    "file": "/home/nils/Documents/projects/azkaban/src/db_manager.c",
-    "output": "/home/nils/Documents/projects/azkaban/build/db_manager.o"
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/db_manager.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/db_manager.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-I/opt/homebrew/Cellar/sqlcipher/4.6.0/include/",
+      "-I/opt/homebrew/Cellar/yubico-piv-tool/2.5.2/include",
+      "-c",
+      "-o",
+      "build/entry.o",
+      "src/entry.c"
+    ],
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/entry.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/entry.o"
   }
 ]

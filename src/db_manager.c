@@ -1,3 +1,4 @@
+#include "entry.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,6 +7,32 @@
 #include <sqlcipher/sqlite3.h>
 
 #include "db_manager.h"
+
+static int _create_entries(void *entries_linked_list, int argc, char **argv,
+                           char **azColName) {
+  EntryNode **head = (EntryNode **)entries_linked_list;
+  if (argv[0] && argv[1] && argv[2]) {
+    Entry entry;
+    entry.id = atoi(argv[0]);
+    entry.name = strdup(argv[1]); // Make sure to free these later
+    entry.user_name = strdup(argv[2]);
+    entry.password = NULL; // No password provided in query
+    entry_list_prepend_item(head, entry);
+  }
+  return 0;
+}
+
+EntryNode *db_get_all_entries(sqlite3 *db) {
+  const char *stmt = "SELECT id, name, user_name FROM Entry ORDER BY id DESC;";
+  char *zErrMsg = 0;
+  EntryNode *entry_list = entry_list_init();
+  if (sqlite3_exec(db, stmt, _create_entries, &entry_list, &zErrMsg) !=
+      SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+  }
+  return entry_list;
+}
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
   int i;

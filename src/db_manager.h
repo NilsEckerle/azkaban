@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #define SQLITE_HAS_CODEC
+#include "entry.h"
 #include <sqlcipher/sqlite3.h>
 
 typedef struct {
@@ -17,13 +18,6 @@ typedef struct {
 
 typedef struct {
   int id;
-  char *name;
-  char *user_name;
-  char *password;
-} Entry;
-
-typedef struct {
-  int id;
   int f_entry_id;
   char *type;
   IContent *content;
@@ -33,7 +27,7 @@ sqlite3 *db_open(const char *filename, const char *password);
 void db_close(sqlite3 *db);
 void _db_setup(sqlite3 *db);
 void _db_create_table(sqlite3 *db, const char *sql_statement);
-Entry db_get_all_entry(void);
+EntryNode *db_get_all_entries(sqlite3 *db);
 EntryDetail db_get_all_entryDetail(Entry entry_detail);
 int db_write_entry(Entry entry);
 int db_write_entryDetail(EntryDetail entry_detail);

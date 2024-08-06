@@ -21,4 +21,35 @@ void entry_list_prepend_item(EntryNode **head, Entry entry);
 void entry_list_itterate_function(EntryNode *head,
                                   void *callback(void *parameter, Entry entry),
                                   void *parameter_first_given_to_callback);
+int entry_list_get_length(EntryNode *head);
+
+typedef struct {
+  char *type;
+  union {
+    char *text;
+    void *blob;
+  } data;
+  size_t size;
+} IContent;
+
+typedef struct {
+  int id;
+  int f_entry_id;
+  IContent *content;
+} EntryDetail;
+
+typedef struct EntryDetailNode {
+  EntryDetail data;
+  struct EntryDetailNode *next;
+} EntryDetailNode;
+
+EntryDetailNode *entryDetail_list_init(void);
+void entryDetail_list_prepend_item(EntryDetailNode **head,
+                                   EntryDetail entry_detail);
+void entryDetail_list_itterate_function(
+    EntryDetailNode *head,
+    void *callback(void *parameter, EntryDetail entry_detail),
+    void *parameter_first_given_to_callback);
+
+int entryDetail_list_get_length(EntryDetailNode *head);
 #endif

@@ -8,8 +8,8 @@ Planed features:
 - Log in with YubiKey
 - multiple YubiKey support
 - save passwords, notes, images, documents
-- be in one file so you can back up it easily
-- probably no backup log in method because screw you.
+- be in one file so you can back it up easily
+- probably no backup login method because screw you.
   You should have registered multiple YubiKeys and backed up one of them!
 
 # How to build

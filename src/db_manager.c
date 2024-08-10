@@ -219,7 +219,7 @@ const char *db_get_password(sqlite3 *db, int id) {
 
 EntryDetailNode *db_get_all_entryDetail(sqlite3 *db, int from_entry_id) {
   const char *sql = "SELECT id, type, content, size FROM EntryDetails WHERE "
-                    "f_entry_id = ? ORDER BY id DESC;";
+                    "f_entry_id = ? AND is_deleted = 0 ORDER BY id DESC;";
   char *zErrMsg = 0;
   EntryDetailNode *entry_details_list = entryDetail_list_init();
 
@@ -276,7 +276,8 @@ static int _create_entries(void *entries_linked_list, int argc, char **argv,
 }
 
 EntryNode *db_get_all_entries(sqlite3 *db) {
-  const char *stmt = "SELECT id, name, user_name FROM Entry ORDER BY id DESC;";
+  const char *stmt = "SELECT id, name, user_name FROM Entry WHERE is_deleted = "
+                     "0 ORDER BY id DESC;";
   char *zErrMsg = 0;
   EntryNode *entry_list = entry_list_init();
   if (sqlite3_exec(db, stmt, _create_entries, &entry_list, &zErrMsg) !=

@@ -197,6 +197,26 @@ int db_change_entry(sqlite3 *db, int entry_id, Entry new_entry) {
   return 0;
 }
 
+const char *db_get_password(sqlite3 *db, int id) {
+  const char *sql =
+      "SELECT password FROM Entry WHERE id = ? AND is_deleted = 0;";
+  sqlite3_stmt *stmt;
+  if (sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK) {
+    fprintf(stderr, "Failed to prepare statement\n");
+    return NULL;
+  }
+
+  sqlite3_bind_int(stmt, 1, id);
+
+  char *password = NULL;
+  if (sqlite3_step(stmt) == SQLITE_ROW) {
+    password = strdup((char *)sqlite3_column_text(stmt, 0));
+  }
+
+  sqlite3_finalize(stmt);
+  return password;
+}
+
 EntryDetailNode *db_get_all_entryDetail(sqlite3 *db, int from_entry_id) {
   const char *sql = "SELECT id, type, content, size FROM EntryDetails WHERE "
                     "f_entry_id = ? ORDER BY id DESC;";
@@ -294,7 +314,7 @@ void _db_setup(sqlite3 *db) {
          "name  VARCHAR(50)   NOT NULL,"
          "user_name VARCHAR(50),"
          "password VARCHAR(50),"
-         "is_deleted INTEGER);";
+         "is_deleted INTEGER DEFAULT 0);";
   _db_create_table(db, stmt);
 
   /* create EntryDetails table */
@@ -304,7 +324,7 @@ void _db_setup(sqlite3 *db) {
          "type TEXT,"
          "content BLOB,"
          "size INT,"
-         "is_deleted INTEGER,"
+         "is_deleted INTEGER DEFAULT 0,"
          "FOREIGN KEY(f_entry_id) REFERENCES Entry(id)"
          ");";
   _db_create_table(db, stmt);

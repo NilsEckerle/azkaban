@@ -58,5 +58,45 @@
     "directory": "/home/nils/Documents/projects/azkaban",
     "file": "/home/nils/Documents/projects/azkaban/src/entry.c",
     "output": "/home/nils/Documents/projects/azkaban/build/entry.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-D_GNU_SOURCE",
+      "-g",
+      "-I/usr/include/",
+      "-I/usr/include/x86_64-linux-gnu",
+      "-c",
+      "-o",
+      "build/azkaban_tui.o",
+      "src/azkaban_tui.c"
+    ],
+    "directory": "/home/nils/Documents/projects/azkaban",
+    "file": "/home/nils/Documents/projects/azkaban/src/azkaban_tui.c",
+    "output": "/home/nils/Documents/projects/azkaban/build/azkaban_tui.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "-std=c17",
+      "-D_GNU_SOURCE",
+      "-g",
+      "-I/usr/include/",
+      "-I/usr/include/x86_64-linux-gnu",
+      "-c",
+      "-o",
+      "build/azkaban_cli.o",
+      "src/azkaban_cli.c"
+    ],
+    "directory": "/home/nils/Documents/projects/azkaban",
+    "file": "/home/nils/Documents/projects/azkaban/src/azkaban_cli.c",
+    "output": "/home/nils/Documents/projects/azkaban/build/azkaban_cli.o"
   }
 ]

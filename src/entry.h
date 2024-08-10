@@ -9,6 +9,7 @@ typedef struct {
   char *name;
   char *user_name;
   char *password;
+  int is_deleted;
 } Entry;
 
 typedef struct EntryNode {
@@ -36,6 +37,7 @@ typedef struct {
   int id;
   int f_entry_id;
   IContent *content;
+  int is_deleted;
 } EntryDetail;
 
 typedef struct EntryDetailNode {

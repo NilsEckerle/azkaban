@@ -8,32 +8,54 @@
 
 #include "db_manager.h"
 
-int db_write_entry(sqlite3 *db, Entry entry) {
-  if (entry.id != -1) {
-    fprintf(stderr,
-            "Your entry.id isn't -1. That could mean, that your entry is "
-            "retrieved from the database and already exists.\n"
-            "Please set it to -1 before writing if you want to write it.");
-    return -1;
-  }
+int db_delete_entryDetail(sqlite3 *db, int entry_detail_id) {
+  // Delete Entry
   sqlite3_stmt *stmt;
-  const char *sql =
-      "INSERT INTO Entry(name, user_name, password) VALUES(?, ?, ?);";
-  int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-  if (rc != SQLITE_OK) {
-    fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
-    return -1;
+  const char *sql = "UPDATE EntryDetails SET is_deleted = 1 WHERE id = ?;";
+
+  if (sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK) {
+    fprintf(stderr, "Failed to prepare statement\n");
+    return 1;
   }
 
-  sqlite3_bind_text(stmt, 1, entry.name, -1, SQLITE_STATIC);
-  sqlite3_bind_text(stmt, 2, entry.user_name, -1, SQLITE_STATIC);
-  sqlite3_bind_text(stmt, 3, entry.password, -1, SQLITE_STATIC);
+  sqlite3_bind_int(stmt, 1, entry_detail_id);
 
-  rc = sqlite3_step(stmt);
-  if (rc != SQLITE_DONE) {
+  if (sqlite3_step(stmt) != SQLITE_DONE) {
     fprintf(stderr, "Execution failed: %s\n", sqlite3_errmsg(db));
     sqlite3_finalize(stmt);
-    return -1;
+    return 1;
+  }
+
+  sqlite3_finalize(stmt);
+  return 0;
+}
+
+void *callback_delete_entry_details_of_entry(void *db,
+                                             EntryDetail entry_detail) {
+  db_delete_entryDetail(db, entry_detail.id);
+  return NULL;
+}
+
+int db_delete_entry(sqlite3 *db, int entry_id) {
+  EntryDetailNode *entry_details_list = db_get_all_entryDetail(db, entry_id);
+  entryDetail_list_itterate_function(
+      entry_details_list, callback_delete_entry_details_of_entry, db);
+
+  // Delete Entry
+  sqlite3_stmt *stmt;
+  const char *sql = "UPDATE Entry SET is_deleted = 1 WHERE id = ?;";
+
+  if (sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK) {
+    fprintf(stderr, "Failed to prepare statement\n");
+    return 1;
+  }
+
+  sqlite3_bind_int(stmt, 1, entry_id);
+
+  if (sqlite3_step(stmt) != SQLITE_DONE) {
+    fprintf(stderr, "Execution failed: %s\n", sqlite3_errmsg(db));
+    sqlite3_finalize(stmt);
+    return 1;
   }
 
   sqlite3_finalize(stmt);
@@ -79,44 +101,103 @@ int db_write_entryDetail(sqlite3 *db, EntryDetail entry_detail) {
   return 0;
 }
 
-static int _create_entries(void *entries_linked_list, int argc, char **argv,
-                           char **azColName) {
-  EntryNode **head = (EntryNode **)entries_linked_list;
-  if (argv[0] && argv[1] && argv[2]) {
-    Entry entry;
-    entry.id = atoi(argv[0]);
-    entry.name = strdup(argv[1]);
-    entry.user_name = strdup(argv[2]);
-    entry.password = NULL; // No password provided in query
-    entry_list_prepend_item(head, entry);
+int db_write_entry(sqlite3 *db, Entry entry) {
+  if (entry.id != -1) {
+    fprintf(stderr,
+            "Your entry.id isn't -1. That could mean, that your entry is "
+            "retrieved from the database and already exists.\n"
+            "Please set it to -1 before writing if you want to write it.");
+    return -1;
   }
+  sqlite3_stmt *stmt;
+  const char *sql =
+      "INSERT INTO Entry(name, user_name, password) VALUES(?, ?, ?);";
+  int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+    return -1;
+  }
+
+  sqlite3_bind_text(stmt, 1, entry.name, -1, SQLITE_STATIC);
+  sqlite3_bind_text(stmt, 2, entry.user_name, -1, SQLITE_STATIC);
+  sqlite3_bind_text(stmt, 3, entry.password, -1, SQLITE_STATIC);
+
+  rc = sqlite3_step(stmt);
+  if (rc != SQLITE_DONE) {
+    fprintf(stderr, "Execution failed: %s\n", sqlite3_errmsg(db));
+    sqlite3_finalize(stmt);
+    return -1;
+  }
+
+  sqlite3_finalize(stmt);
   return 0;
 }
 
-EntryNode *db_get_all_entries(sqlite3 *db) {
-  const char *stmt = "SELECT id, name, user_name FROM Entry ORDER BY id DESC;";
-  char *zErrMsg = 0;
-  EntryNode *entry_list = entry_list_init();
-  if (sqlite3_exec(db, stmt, _create_entries, &entry_list, &zErrMsg) !=
-      SQLITE_OK) {
-    fprintf(stderr, "SQL error: %s\n", zErrMsg);
-    sqlite3_free(zErrMsg);
+Entry *db_get_entry(sqlite3 *db, char *name) {
+  const char *stmt =
+      "SELECT id, name, user_name FROM Entry WHERE name = ? ORDER BY id DESC;";
+  sqlite3_stmt *res;
+  Entry *entry = malloc(sizeof(Entry));
+
+  if (entry == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    return NULL;
   }
-  return entry_list;
+
+  int rc = sqlite3_prepare_v2(db, stmt, -1, &res, 0);
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "Failed to prepare statement\n");
+    return NULL;
+  }
+
+  sqlite3_bind_text(res, 1, name, -1, NULL);
+
+  rc = sqlite3_step(res);
+  if (rc == SQLITE_ROW) {
+    entry->id = sqlite3_column_int(res, 0);
+    entry->name = strdup((char *)sqlite3_column_text(res, 1));
+    entry->user_name = strdup((char *)sqlite3_column_text(res, 2));
+  } else {
+    free(entry);
+    entry = NULL;
+  }
+
+  sqlite3_finalize(res);
+  return entry;
+}
+
+int db_change_entry(sqlite3 *db, int entry_id, Entry new_entry) {
+  EntryDetailNode *entry_detail_list = db_get_all_entryDetail(db, entry_id);
+
+  // write new entry
+  db_write_entry(db, new_entry);
+  Entry *new_entry_from_get = db_get_entry(db, new_entry.name);
+  int new_entry_id = new_entry_from_get->id;
+  printf("%d\n", new_entry_id);
+
+  // write entryDetails to new entry
+  EntryDetailNode *current = entry_detail_list;
+  while (current != NULL) {
+    current->data.f_entry_id = new_entry_id;
+    current->data.id = -1;
+    db_write_entryDetail(db, current->data);
+    current = current->next;
+  }
+
+  // succsessful written, now delete
+  if (db_delete_entry(db, entry_id) == 1) {
+    fprintf(stderr, "Failed to delete");
+  }
+  current = entry_detail_list;
+  while (current != NULL) {
+    db_delete_entryDetail(db, current->data.id);
+    current = current->next;
+  }
+
+  return 0;
 }
 
 EntryDetailNode *db_get_all_entryDetail(sqlite3 *db, int from_entry_id) {
-
-  // the table is created like:
-  // stmt = "CREATE TABLE IF NOT EXISTS EntryDetails("
-  //        "id INTEGER PRIMARY KEY,"
-  //        "f_entry_id INT,"
-  //        "type TEXT,"
-  //        "content BLOB,"
-  //        "size INT,"
-  //        "FOREIGN KEY(f_entry_id) REFERENCES Entry(id)"
-  //        ");";
-
   const char *sql = "SELECT id, type, content, size FROM EntryDetails WHERE "
                     "f_entry_id = ? ORDER BY id DESC;";
   char *zErrMsg = 0;
@@ -160,6 +241,32 @@ EntryDetailNode *db_get_all_entryDetail(sqlite3 *db, int from_entry_id) {
   return entry_details_list;
 }
 
+static int _create_entries(void *entries_linked_list, int argc, char **argv,
+                           char **azColName) {
+  EntryNode **head = (EntryNode **)entries_linked_list;
+  if (argv[0] && argv[1] && argv[2]) {
+    Entry entry;
+    entry.id = atoi(argv[0]);
+    entry.name = strdup(argv[1]);
+    entry.user_name = strdup(argv[2]);
+    entry.password = NULL; // No password provided in query
+    entry_list_prepend_item(head, entry);
+  }
+  return 0;
+}
+
+EntryNode *db_get_all_entries(sqlite3 *db) {
+  const char *stmt = "SELECT id, name, user_name FROM Entry ORDER BY id DESC;";
+  char *zErrMsg = 0;
+  EntryNode *entry_list = entry_list_init();
+  if (sqlite3_exec(db, stmt, _create_entries, &entry_list, &zErrMsg) !=
+      SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+  }
+  return entry_list;
+}
+
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
   int i;
   for (i = 0; i < argc; i++) {
@@ -186,7 +293,8 @@ void _db_setup(sqlite3 *db) {
          "id INTEGER PRIMARY KEY,"
          "name  VARCHAR(50)   NOT NULL,"
          "user_name VARCHAR(50),"
-         "password VARCHAR(50));";
+         "password VARCHAR(50),"
+         "is_deleted INTEGER);";
   _db_create_table(db, stmt);
 
   /* create EntryDetails table */
@@ -196,6 +304,7 @@ void _db_setup(sqlite3 *db) {
          "type TEXT,"
          "content BLOB,"
          "size INT,"
+         "is_deleted INTEGER,"
          "FOREIGN KEY(f_entry_id) REFERENCES Entry(id)"
          ");";
   _db_create_table(db, stmt);

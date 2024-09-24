@@ -2,9 +2,23 @@
   {
     "arguments": [
       "/usr/bin/gcc",
-      "-Wall",
-      "-Wextra",
-      "-pedantic",
+      "-std=c17",
+      "-D_GNU_SOURCE",
+      "-g",
+      "-I/usr/include/",
+      "-I/usr/include/x86_64-linux-gnu",
+      "-c",
+      "-o",
+      "build/azkaban-cli.o",
+      "src/azkaban-cli.c"
+    ],
+    "directory": "/home/nilse/projects/azkaban",
+    "file": "/home/nilse/projects/azkaban/src/azkaban-cli.c",
+    "output": "/home/nilse/projects/azkaban/build/azkaban-cli.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
@@ -15,16 +29,13 @@
       "build/azkaban.o",
       "src/azkaban.c"
     ],
-    "directory": "/home/nils/Documents/projects/azkaban",
-    "file": "/home/nils/Documents/projects/azkaban/src/azkaban.c",
-    "output": "/home/nils/Documents/projects/azkaban/build/azkaban.o"
+    "directory": "/home/nilse/projects/azkaban",
+    "file": "/home/nilse/projects/azkaban/src/azkaban.c",
+    "output": "/home/nilse/projects/azkaban/build/azkaban.o"
   },
   {
     "arguments": [
       "/usr/bin/gcc",
-      "-Wall",
-      "-Wextra",
-      "-pedantic",
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
@@ -35,16 +46,13 @@
       "build/db_manager.o",
       "src/db_manager.c"
     ],
-    "directory": "/home/nils/Documents/projects/azkaban",
-    "file": "/home/nils/Documents/projects/azkaban/src/db_manager.c",
-    "output": "/home/nils/Documents/projects/azkaban/build/db_manager.o"
+    "directory": "/home/nilse/projects/azkaban",
+    "file": "/home/nilse/projects/azkaban/src/db_manager.c",
+    "output": "/home/nilse/projects/azkaban/build/db_manager.o"
   },
   {
     "arguments": [
       "/usr/bin/gcc",
-      "-Wall",
-      "-Wextra",
-      "-pedantic",
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
@@ -55,8 +63,8 @@
       "build/entry.o",
       "src/entry.c"
     ],
-    "directory": "/home/nils/Documents/projects/azkaban",
-    "file": "/home/nils/Documents/projects/azkaban/src/entry.c",
-    "output": "/home/nils/Documents/projects/azkaban/build/entry.o"
+    "directory": "/home/nilse/projects/azkaban",
+    "file": "/home/nilse/projects/azkaban/src/entry.c",
+    "output": "/home/nilse/projects/azkaban/build/entry.o"
   }
 ]

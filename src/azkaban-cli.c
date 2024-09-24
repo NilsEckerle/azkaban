@@ -141,6 +141,9 @@ int main(int argc, char *argv[]) {
    * (1) programm name
    * (2) Database File Path (relative or absolute)
    * */
+
+  printf("main is running !!!!!\n");
+
   char *database_file_path;
   if (argc == 1) {
     // TODO: Create new passwordfile

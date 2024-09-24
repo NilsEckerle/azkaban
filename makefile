@@ -5,7 +5,7 @@ CFLAGS = -std=c17 -D_GNU_SOURCE -g -I/usr/include/ -I/usr/include/x86_64-linux-g
 CFLAGS_END = -lsqlcipher -lykpiv
 SRCDIR = src
 BUILDDIR = build
-CLI_TARGET = azkaban_cli
+CLI_TARGET = azkaban-cli
 TUI_TARGET = azkaban_tui
 GUI_TARGET = azkaban
 

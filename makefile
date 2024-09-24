@@ -5,15 +5,16 @@ CFLAGS = -std=c17 -D_GNU_SOURCE -g -I/usr/include/ -I/usr/include/x86_64-linux-g
 CFLAGS_END = -lsqlcipher -lykpiv
 SRCDIR = src
 BUILDDIR = build
-TARGET = azkaban
-TARGET-CLI = azkaban-cli
+CLI_TARGET = azkaban_cli
+TUI_TARGET = azkaban_tui
+GUI_TARGET = azkaban
 
 # Source files
 SRC = $(wildcard $(SRCDIR)/*.c)
 OBJ = $(SRC:$(SRCDIR)/%.c=$(BUILDDIR)/%.o)
 
 # Default TARGET
-all: clean setup $(TARGET) $(TARGET-CLI)
+all: clean setup $(GUI_TARGET) $(TUI_TARGET) $(CLI_TARGET)
 
 clean:
 	@echo "Cleaning up..."
@@ -24,13 +25,19 @@ setup:
 	@mkdir -p $(BUILDDIR)
 
 # Compile target: build the executable
-$(TARGET): $(OBJ)
-	@echo "Linking..."
-	$(CC) $(CFLAGS) -o $(BUILDDIR)/$@ $(filter-out $(BUILDDIR)/$(TARGET-CLI).o, $^) $(CFLAGS_END)
+$(GUI_TARGET): $(filter-out $(BUILDDIR)/$(CLI_TARGET).o $(BUILDDIR)/$(TUI_TARGET).o, $(OBJ))
+	@echo "Linking for gui..."
+	$(CC) $(CFLAGS) -o $(BUILDDIR)/$@ $^ $(CFLAGS_END)
 
-$(TARGET-CLI): $(OBJ)
-	@echo "Linking..."
-	$(CC) $(CFLAGS) -o $(BUILDDIR)/$@ $(filter-out $(BUILDDIR)/$(TARGET).o, $^) $(CFLAGS_END)
+# Compile target: build the executable
+$(CLI_TARGET): $(filter-out $(BUILDDIR)/$(TUI_TARGET).o $(BUILDDIR)/$(GUI_TARGET).o, $(OBJ))
+	@echo "Linking for cli..."
+	$(CC) $(CFLAGS) -o $(BUILDDIR)/$@ $^ $(CFLAGS_END)
+
+# Compile target: build the executable
+$(TUI_TARGET): $(filter-out $(BUILDDIR)/$(CLI_TARGET).o $(BUILDDIR)/$(GUI_TARGET).o, $(OBJ))
+	@echo "Linking for tui..."
+	$(CC) $(CFLAGS) -o $(BUILDDIR)/$@ $^ $(CFLAGS_END)
 
 # Compile object files
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c

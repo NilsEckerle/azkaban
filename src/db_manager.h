@@ -12,6 +12,7 @@ void _db_setup(sqlite3 *db);
 EntryNode *db_get_all_entries(sqlite3 *db);
 Entry *db_get_entry(sqlite3 *db, char *name);
 EntryDetailNode *db_get_all_entryDetail(sqlite3 *db, int from_entry_id);
+const char *db_get_password(sqlite3 *db, int id);
 int db_change_entry(sqlite3 *db, int entry_id, Entry new_entry);
 int db_change_entryDetail(sqlite3 *db, int id, EntryDetail new_entry_detail);
 int db_write_entry(sqlite3 *db, Entry entry);

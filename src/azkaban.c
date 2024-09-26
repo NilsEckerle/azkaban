@@ -9,14 +9,17 @@ void *callback(void *not_used, Entry entry) {
   printf("name = %s\n", entry.name);
   printf("user_name = %s\n", entry.user_name);
   printf("\n");
+  return NULL;
 }
 
 int main(int argc, char *argv[]) {
-  printf("Hello from azkaban\n");
+  printf("You shouldn't run azkaban directly.\nI use it to test some code but "
+         "when you can run this, you shouldnt be able to.\nPlease Report this "
+         "to your IT Admin.\n");
 
+  // some test credentials
   const char *filename = "test.azk";
   const char *password = "123";
-  sqlite3 *db = db_open(filename, password);
 
   Entry e1;
   e1.id = -1;
@@ -59,6 +62,7 @@ int main(int argc, char *argv[]) {
   e4.name = "e4";
   e4.user_name = "e4_un";
   e4.password = "e4_pw";
+  sqlite3 *db = db_open("test.azk", "123");
 
   db_write_entry(db, e1);
   db_write_entry(db, e2);

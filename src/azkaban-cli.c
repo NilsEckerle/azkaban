@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <threads.h>
 
 void quit_app() { exit(EXIT_SUCCESS); }
 
@@ -55,6 +54,7 @@ int check_for_help(char **inputs, int input_count) {
 
 void *print_entries(void *not_used, Entry entry) {
   printf("ID: %d \t%s\n", entry.id, entry.name);
+  return NULL;
 }
 
 /**
@@ -65,15 +65,17 @@ void *print_entries(void *not_used, Entry entry) {
  * 1: didn't do anything
  */
 int check_for_list(char **inputs, int input_count, sqlite3 *decrypted_db) {
-  if (strcmp(inputs[0], "list") == 0 && input_count == 1) {
-    // TODO: List all
-    EntryNode *list_of_entries = db_get_all_entries(decrypted_db);
+  if (input_count == 1) {
+    if (strcmp(inputs[0], "list") == 0 || strcmp(inputs[0], "ls") == 0) {
+      // TODO: List all
+      EntryNode *list_of_entries = db_get_all_entries(decrypted_db);
 
-    entry_list_itterate_function(list_of_entries, print_entries, NULL);
-    return 0;
+      entry_list_itterate_function(list_of_entries, print_entries, NULL);
+      return 0;
+    }
   }
   // check for list + argument
-  if (strcmp(inputs[0], "list") == 0 && input_count >= 2) {
+  if (strcmp(inputs[0], "list") == 0 || strcmp(inputs[0], "ls") == 0) {
     // check for list --help
     if (input_count == 2 && strcmp(inputs[1], "--help") == 0) {
       // TODO: print listhelp
@@ -81,13 +83,13 @@ int check_for_list(char **inputs, int input_count, sqlite3 *decrypted_db) {
       return 0;
     }
     // check for list folder
-    if (strcmp(inputs[1], "folder") == 0 && input_count == 2) {
+    if (strcmp(inputs[1], "folder") == 0) {
       // TODO: List all folders
       printf("listing all folders...\n");
       return 0;
     }
     // check for list folder {name}
-    if (strcmp(inputs[1], "folder") == 0 && input_count == 3) {
+    if (strcmp(inputs[1], "folder") == 0) {
 
       // check for list folder --help
       if (strcmp(inputs[2], "--help") == 0) {

@@ -5,16 +5,17 @@
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
-      "-I/usr/include/",
-      "-I/usr/include/x86_64-linux-gnu",
+      "-I/usr/local/include/",
+      "-I/opt//homebrew/Cellar/sqlcipher/4.6.1/include",
+      "-I/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/libxml/threads.h",
       "-c",
       "-o",
       "build/azkaban.o",
       "src/azkaban.c"
     ],
-    "directory": "/home/nilse/projects/azkaban",
-    "file": "/home/nilse/projects/azkaban/src/azkaban.c",
-    "output": "/home/nilse/projects/azkaban/build/azkaban.o"
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/azkaban.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/azkaban.o"
   },
   {
     "arguments": [
@@ -22,16 +23,17 @@
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
-      "-I/usr/include/",
-      "-I/usr/include/x86_64-linux-gnu",
+      "-I/usr/local/include/",
+      "-I/opt//homebrew/Cellar/sqlcipher/4.6.1/include",
+      "-I/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/libxml/threads.h",
       "-c",
       "-o",
       "build/db_manager.o",
       "src/db_manager.c"
     ],
-    "directory": "/home/nilse/projects/azkaban",
-    "file": "/home/nilse/projects/azkaban/src/db_manager.c",
-    "output": "/home/nilse/projects/azkaban/build/db_manager.o"
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/db_manager.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/db_manager.o"
   },
   {
     "arguments": [
@@ -39,16 +41,17 @@
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
-      "-I/usr/include/",
-      "-I/usr/include/x86_64-linux-gnu",
+      "-I/usr/local/include/",
+      "-I/opt//homebrew/Cellar/sqlcipher/4.6.1/include",
+      "-I/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/libxml/threads.h",
       "-c",
       "-o",
       "build/entry.o",
       "src/entry.c"
     ],
-    "directory": "/home/nilse/projects/azkaban",
-    "file": "/home/nilse/projects/azkaban/src/entry.c",
-    "output": "/home/nilse/projects/azkaban/build/entry.o"
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/entry.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/entry.o"
   },
   {
     "arguments": [
@@ -56,16 +59,17 @@
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
-      "-I/usr/include/",
-      "-I/usr/include/x86_64-linux-gnu",
+      "-I/usr/local/include/",
+      "-I/opt//homebrew/Cellar/sqlcipher/4.6.1/include",
+      "-I/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/libxml/threads.h",
       "-c",
       "-o",
       "build/azkaban_tui.o",
       "src/azkaban_tui.c"
     ],
-    "directory": "/home/nilse/projects/azkaban",
-    "file": "/home/nilse/projects/azkaban/src/azkaban_tui.c",
-    "output": "/home/nilse/projects/azkaban/build/azkaban_tui.o"
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/azkaban_tui.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/azkaban_tui.o"
   },
   {
     "arguments": [
@@ -73,15 +77,16 @@
       "-std=c17",
       "-D_GNU_SOURCE",
       "-g",
-      "-I/usr/include/",
-      "-I/usr/include/x86_64-linux-gnu",
+      "-I/usr/local/include/",
+      "-I/opt//homebrew/Cellar/sqlcipher/4.6.1/include",
+      "-I/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/libxml/threads.h",
       "-c",
       "-o",
       "build/azkaban-cli.o",
       "src/azkaban-cli.c"
     ],
-    "directory": "/home/nilse/projects/azkaban",
-    "file": "/home/nilse/projects/azkaban/src/azkaban-cli.c",
-    "output": "/home/nilse/projects/azkaban/build/azkaban-cli.o"
+    "directory": "/Users/nilse/Documents/Projects/azkaban",
+    "file": "/Users/nilse/Documents/Projects/azkaban/src/azkaban-cli.c",
+    "output": "/Users/nilse/Documents/Projects/azkaban/build/azkaban-cli.o"
   }
 ]

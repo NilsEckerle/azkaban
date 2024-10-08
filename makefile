@@ -3,8 +3,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c17 -D_GNU_SOURCE -g -I/usr/include/ -I/usr/include/x86_64-linux-gnu
 CFLAGS = -std=c17 -D_GNU_SOURCE -g -I/usr/include/ -I/usr/include/x86_64-linux-gnu
 # MacOS
-CFLAGS = -std=c17 -D_GNU_SOURCE -g -I/usr/local/include/ -I/opt//homebrew/Cellar/sqlcipher/4.6.1/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/libxml/threads.h
-CFLAGS_END = -lsqlcipher -lykpiv
+# CFLAGS = -std=c17 -D_GNU_SOURCE -g -I/usr/local/include/ -I/opt//homebrew/Cellar/sqlcipher/4.6.1/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/libxml/threads.h
+CFLAGS_END = -lsqlcipher -lykpiv -lSDL2
 SRCDIR = src
 BUILDDIR = build
 CLI_TARGET = azkaban-cli

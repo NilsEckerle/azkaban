@@ -12,7 +12,6 @@
 FolderNode *db_get_from_folder(sqlite3 *db, char *folder_name);
 
 FolderNode *db_get_all_folder(sqlite3 *db) {
-
   const char *sql = "SELECT DISTINCT name FROM Folders;";
   char *zErrMsg = 0;
   FolderNode *folders = folder_list_init();
@@ -24,8 +23,8 @@ FolderNode *db_get_all_folder(sqlite3 *db) {
   }
 
   while (sqlite3_step(stmt) == SQLITE_ROW) {
-    const unsigned char *folder_n = sqlite3_column_text(stmt, 0);
-    folder_list_prepent(&folders, (char *)folder_n);
+    char *folder_n = (char *)sqlite3_column_text(stmt, 0);
+    folder_list_prepent(&folders, strdup(folder_n));
   }
 
   sqlite3_finalize(stmt);

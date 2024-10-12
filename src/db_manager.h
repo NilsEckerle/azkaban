@@ -19,6 +19,9 @@ int db_write_entry(sqlite3 *db, Entry entry);
 int db_write_entryDetail(sqlite3 *db, EntryDetail entry_detail);
 int db_delete_entry(sqlite3 *db, int entry_id);
 int db_delete_entryDetail(sqlite3 *db, int entry_detail_id);
+int db_add_to_folder(sqlite3 *db, int entry_id, char *folder_name);
+FolderNode *db_get_all_folder(sqlite3 *db);
+FolderNode *db_get_from_folder(sqlite3 *db, char *folder_name);
 
 void _db_decrypt(sqlite3 *db, const char *password);
 

@@ -1,4 +1,38 @@
 #include "entry.h"
+#include <time.h>
+
+FolderNode *folder_list_init(void) { return NULL; }
+void folder_list_prepent(FolderNode **head, char *folder_name) {
+  FolderNode *new_node = malloc(sizeof(FolderNode));
+  if (new_node == NULL) {
+    perror("Failed to allocate memory for new node");
+    exit(EXIT_FAILURE);
+  }
+  new_node->folder_name = folder_name;
+  new_node->next = *head;
+  *head = new_node;
+}
+void folder_list_itterate_function(FolderNode *head,
+                                   void *callback(void *parameter,
+                                                  char *folder_name),
+                                   void *parameter_first_given_to_callback) {
+  FolderNode *current = head;
+  while (current != NULL) {
+    callback(parameter_first_given_to_callback, current->folder_name);
+    current = current->next;
+  }
+}
+int folder_list_get_length(FolderNode *head) {
+  int length = 0;
+  FolderNode *current = head;
+
+  while (current != NULL) {
+    length++;
+    current = current->next;
+  }
+
+  return length;
+}
 
 EntryNode *entry_list_init(void) { return NULL; }
 void entry_list_prepend_item(EntryNode **head, Entry entry) {

@@ -2,11 +2,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define SQLITE_HAS_CODEC
 #include <sqlcipher/sqlite3.h>
 
 #include "db_manager.h"
+
+FolderNode *db_get_from_folder(sqlite3 *db, char *folder_name);
+
+FolderNode *db_get_all_folder(sqlite3 *db) {
+
+  const char *sql = "SELECT DISTINCT name FROM Folders;";
+  char *zErrMsg = 0;
+  FolderNode *folders = folder_list_init();
+
+  sqlite3_stmt *stmt;
+  if (sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK) {
+    fprintf(stderr, "Failed to prepare statement\n");
+    return NULL;
+  }
+
+  while (sqlite3_step(stmt) == SQLITE_ROW) {
+    const unsigned char *folder_n = sqlite3_column_text(stmt, 0);
+    folder_list_prepent(&folders, (char *)folder_n);
+  }
+
+  sqlite3_finalize(stmt);
+
+  return folders;
+}
+
+int db_add_to_folder(sqlite3 *db, int entry_id, char *folder_name) {
+  sqlite3_stmt *stmt;
+  const char *sql = "INSERT INTO Folders(name, f_entry_id) VALUES (?, ?);";
+  int rc;
+
+  rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+    return 1;
+  }
+
+  sqlite3_bind_int(stmt, 1, entry_id);
+  sqlite3_bind_text(stmt, 2, folder_name, -1, SQLITE_TRANSIENT);
+
+  rc = sqlite3_step(stmt);
+  if (rc != SQLITE_DONE) {
+    fprintf(stderr, "Failed to execute statment: %s\n", sqlite3_errmsg(db));
+    return 1;
+  }
+  return 0;
+}
 
 int db_delete_entryDetail(sqlite3 *db, int entry_detail_id) {
   // Delete Entry
@@ -326,6 +373,15 @@ void _db_setup(sqlite3 *db) {
          "content BLOB,"
          "size INT,"
          "is_deleted INTEGER DEFAULT 0,"
+         "FOREIGN KEY(f_entry_id) REFERENCES Entry(id)"
+         ");";
+  _db_create_table(db, stmt);
+
+  /* create Folders table */
+  stmt = "CREATE TABLE IF NOT EXISTS Folders("
+         "name VARCHAR(5),"
+         "f_entry_id INT,"
+         "PRIMARY KEY (name, f_entry_id),"
          "FOREIGN KEY(f_entry_id) REFERENCES Entry(id)"
          ");";
   _db_create_table(db, stmt);

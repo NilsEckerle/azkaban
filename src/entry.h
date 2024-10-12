@@ -54,4 +54,18 @@ void entryDetail_list_itterate_function(
     void *parameter_first_given_to_callback);
 
 int entryDetail_list_get_length(EntryDetailNode *head);
+
+typedef struct FolderNode {
+  char *folder_name;
+  struct FolderNode *next;
+} FolderNode;
+
+FolderNode *folder_list_init(void);
+void folder_list_prepent(FolderNode **head, char *folder_name);
+void folder_list_itterate_function(FolderNode *head,
+                                   void *callback(void *parameter,
+                                                  char *folder_name),
+                                   void *parameter_first_given_to_callback);
+int folder_list_get_length(FolderNode *head);
+
 #endif

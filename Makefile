@@ -1,16 +1,25 @@
 OBJECTS = build/azkaban.o
 
+# This is needed on my mac becaus dah.
+CFLAGS_MAC = -Ithird/azkaban-core/third/sqlcipher/include
+# CFLAGS_MAC =
+
 CFLAGS = -Iinclude \
 		 -Ithird/azkaban-core/include \
 		 -Ithird/sdl2/include \
 		 -Ithird/sdl2_image/include \
-		 -Ithird/sdl2_ttf/include
+		 -Ithird/sdl2_ttf/include\
+		 $(CFLAGS_MAC)
+
+LDFLAGS_MAC = -Wl,-rpath,@loader_path/../third/azkaban-core/lib
+# LDFLAGS_MAC = 
+
 LDFLAGS = -Lthird/azkaban-core/lib -lazkaban-core \
 		  -Lthird/sdl2/lib -lSDL2 \
 		  -Lthird/sdl2_image/lib -lSDL2_image \
 		  -Lthird/sdl2_ttf/lib -lSDL2_ttf\
-          -Wl,-rpath,\$$ORIGIN/../third/azkaban-core/lib
-
+          -Wl,-rpath,\$$ORIGIN/../third/azkaban-core/lib\
+		  $(LDFLAGS_MAC)
 
 final: setup $(OBJECTS)
 	gcc $(OBJECTS) $(LDFLAGS) -o bin/azkaban

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "SDL2/SDL.h"
 
 void *callback(void *not_used, Entry entry) {
   printf("id = %d\n", entry.id);

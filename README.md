@@ -41,6 +41,15 @@ make sure to change the version to your installed one.
 It should look something like this:
 ![image include example](documentation/lib-include-structure-example.png "include-example")
 
+## Build submodule azkaban-core
+
+Build the submodule so the library can be linked.
+```bash
+cd third/azkaban-core
+make
+cd ../..
+```
+
 ## Building
 
 `cd` into the root `azkaban` directory.\jk

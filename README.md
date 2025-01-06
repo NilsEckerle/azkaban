@@ -14,13 +14,62 @@ Planed features:
 
 # How to build
 
-0. install requirements
-0. run `make`
+## Link third party librarys
 
-## How to include headers in nvim?
+## 1. Install them
+I use `brew` to install them, because i mainly use a mac and on linux i can simply install brew too.
+
+example - `brew install sdl2 sdl2_ttf sdl2_image`
+
+list of all dependencies:
+- `sdl2` - simple graphics library
+- `sdl2_ttf` - fonts for sdl
+- `sdl2_image` - images for sdl
+
+## 2. link them
+I create symlinks to a directory in my project. use the following structure: \
+`azkaban/third/<library name>/include` \
+`azkaban/third/<library name>/lib`
+
+You can create one with:
+
+sdl2\_ttf lib example: \
+`ln -s /home/linuxbrew/.linuxbrew/Cellar/sdl2_ttf/2.24.0/lib /home/nils/Documents/projects/azkaban/third/sdl2_ttf/lib`
+
+make sure to change the version to your installed one.
+
+It should look something like this:
+![image include example](documentation/lib-include-structure-example.png "include-example")
+
+## Build submodule azkaban-core
+
+Build the submodule so the library can be linked.
+```bash
+cd third/azkaban-core
+make
+cd ../..
+```
+
+## Building
+
+`cd` into the root `azkaban` directory.\jk
+Execute `make` and pray.
+
+when errors appear fix them and repeat.
+
+Make sure to pray every reqursion.
+
+## nvim LSP support.
+
+I had to search so i tell you how.
 
 0. have clangd installed
 0. install *bear*
 0. run `bear -- make`
 
-on my machine it works. If it doesn't at yours, that's not my problem!
+Bear - a tool to generate compilation database for Clang tooling.\
+check `man bear` to see more
+
+
+
+

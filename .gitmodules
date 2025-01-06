@@ -1,0 +1,3 @@
+[submodule "third/azkaban-core"]
+	path = third/azkaban-core
+	url = git@github.com:N1lsE/azkaban-core.git

@@ -56,6 +56,10 @@ void *print_entries(void *not_used, Entry entry) {
   printf("ID: %d \t%s\n", entry.id, entry.name);
   return NULL;
 }
+void *print_folders(void *not_used, char *folder_name) {
+  printf("%s\n", folder_name);
+  return NULL;
+}
 
 /**
  * returns int:
@@ -67,9 +71,7 @@ void *print_entries(void *not_used, Entry entry) {
 int check_for_list(char **inputs, int input_count, sqlite3 *decrypted_db) {
   if (input_count == 1) {
     if (strcmp(inputs[0], "list") == 0 || strcmp(inputs[0], "ls") == 0) {
-      // TODO: List all
       EntryNode *list_of_entries = db_get_all_entries(decrypted_db);
-
       entry_list_itterate_function(list_of_entries, print_entries, NULL);
       return 0;
     }
@@ -86,6 +88,8 @@ int check_for_list(char **inputs, int input_count, sqlite3 *decrypted_db) {
     if (strcmp(inputs[1], "folder") == 0) {
       // TODO: List all folders
       printf("listing all folders...\n");
+      FolderNode *folders = db_get_all_folder(decrypted_db);
+      folder_list_itterate_function(folders, print_folders, NULL);
       return 0;
     }
     // check for list folder {name}

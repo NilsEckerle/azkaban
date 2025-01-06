@@ -1,9 +1,15 @@
+# Ignore
 bin/
 build/
-third/
 azkaban
 *.azk
 .cache/
 compile_commands.json
 .DS_Store
 .gitignore
+
+third/*
+third/azkaban-core/third/*
+
+# Allow
+!third/azkaban-core

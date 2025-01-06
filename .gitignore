@@ -1,9 +1,9 @@
+bin/
 build/
+third/
 azkaban
 *.azk
 .cache/
 compile_commands.json
 .DS_Store
-makefile
 .gitignore
-doc/

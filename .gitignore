@@ -9,7 +9,6 @@ compile_commands.json
 .gitignore
 
 third/*
-third/azkaban-core/third/*
 
 # Allow
 !third/azkaban-core

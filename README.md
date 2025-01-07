@@ -12,6 +12,16 @@ Planed features:
 - probably no backup login method because screw you.
   You should have registered multiple YubiKeys and backed up one of them!
 
+# How to clone this repo (with submodules)
+
+`git clone --recurse-submodules <azkaban-repo-url>`\
+or
+```bash
+git clone <azkaban-repo-url>
+cd azkaban
+git submodule update --init --recursive
+```
+
 # How to build
 
 ## Link third party librarys
@@ -70,6 +80,10 @@ I had to search so i tell you how.
 Bear - a tool to generate compilation database for Clang tooling.\
 check `man bear` to see more
 
+# How to handle submodules?
+
+init - `git submodule update --init --recursive`
+update - `git submodule update --remote --merge`
 
 
 

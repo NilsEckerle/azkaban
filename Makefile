@@ -1,8 +1,11 @@
 OBJECTS = build/azkaban.o
 
 # This is needed on my mac becaus dah.
+LDFLAGS_MAC = -Wl,-rpath,@loader_path/../third/azkaban-core/lib
 CFLAGS_MAC = -Ithird/azkaban-core/third/sqlcipher/include
-# CFLAGS_MAC =
+# comment this to build on mac
+LDFLAGS_MAC = 
+CFLAGS_MAC =
 
 CFLAGS = -Iinclude \
 		 -Ithird/azkaban-core/include \
@@ -11,8 +14,6 @@ CFLAGS = -Iinclude \
 		 -Ithird/sdl2_ttf/include\
 		 $(CFLAGS_MAC)
 
-LDFLAGS_MAC = -Wl,-rpath,@loader_path/../third/azkaban-core/lib
-# LDFLAGS_MAC = 
 
 LDFLAGS = -Lthird/azkaban-core/lib -lazkaban-core \
 		  -Lthird/sdl2/lib -lSDL2 \

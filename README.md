@@ -62,7 +62,7 @@ cd ../..
 
 ## Building
 
-`cd` into the root `azkaban` directory.\jk
+`cd` into the root `azkaban` directory.\
 Execute `make` and pray.
 
 when errors appear fix them and repeat.

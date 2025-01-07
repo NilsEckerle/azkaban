@@ -82,7 +82,7 @@ check `man bear` to see more
 
 # How to handle submodules?
 
-init - `git submodule update --init --recursive`
+init - `git submodule update --init --recursive`\
 update - `git submodule update --remote --merge`
 
 

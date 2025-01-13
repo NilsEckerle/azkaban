@@ -14,10 +14,10 @@ Planed features:
 
 # How to clone this repo (with submodules)
 
-`git clone --recurse-submodules <azkaban-repo-url>`\
+`git clone --recurse-submodules https://github.com/N1lsE/azkaban`\
 or
 ```bash
-git clone <azkaban-repo-url>
+git clone https://github.com/N1lsE/azkaban
 cd azkaban
 git submodule update --init --recursive
 ```

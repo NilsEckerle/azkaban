@@ -1,3 +1,5 @@
+THIS IS NOT YET A USABLE PRODUCT!
+
 This is my attempt on a password manager.
 
 I plan on writing it in c (to learn c) and maby later use some FFI (to learn FFI)

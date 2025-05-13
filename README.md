@@ -1,3 +1,14 @@
+Discontinued!!!
+
+Lerning for next time:
+
+- use CMake or premake
+- add third party library into repositorry, not symlinked
+- dont use git submodules. project is to small for it to be worth.
+
+azkaban-core project gets discontinued too.
+
+
 THIS IS NOT YET A USABLE PRODUCT!
 
 This is my attempt on a password manager.
